@@ -7,7 +7,7 @@ Codecov C# Example
 ## Installation
 
 You need to add the [OpenCover][5] nuget package to your Visual Studio solution which is used to generate code coverage analysis:
-   
+
 ```
 PM> Install-Package OpenCover
 ```
@@ -36,7 +36,7 @@ This command makes a few assumptions which you will most likely have to adjust t
 3. Unit tests are compiled in a DLL called .\MyProject Unit Tests\bin\Debug\MyProject.UnitTests.dll (replace 'Debug' with 'Release if you compile in 'Release' mode).
 4. Code coverage will include all classes, methods and properties under the [MyProject] namespace except [MyProject]MyProject.Properties. These properties, typically, include your project version number, compiler options, etc. and therefore should be excluded from the code coverage report.
 5. Any class decorated with the 'ExcludeFromCodeCoverage' attribute is automatically excluded from the coverage analysis.
-6. Code coverage analysis is written to a XML file called MyProject_coverage.xml  
+6. Code coverage analysis is written to a XML file called MyProject_coverage.xml
 
 Now that you have generated your code coverage analysis, you must download Codecov's "upload script" and use it to upload your code coverage file to CodeCov.
 
@@ -44,7 +44,7 @@ Now that you have generated your code coverage analysis, you must download Codec
 ##PowerShell script
 
 The PowerShell script contains two lines: one to download Codecov's script and the second one to upload your coverage file to Codecov.io
- 
+
 ```PowerShell
 (New-Object System.Net.WebClient).DownloadFile("https://codecov.io/bash", ".\CodecovUploader.sh")
 .\CodecovUploader.sh -f "MyProject_coverage.xml -t <your upload token> -X gcov
@@ -56,11 +56,11 @@ TIP: for added convenience, you can paste the command from the 'Generate the Cov
 
 
 ## Continuous Integration
- 
+
 If you use a CI, such as AppVeyor for example, you need to modify the 'after_test' section of your .yml to instruct your CI to generate the coverage file, download Codecov's uploader and finally to upload your coverage file to codecov.io. Here's what the 'after_test' section should look like:
 
 ``` YAML
-after_test: 
+after_test:
     - .\packages\OpenCover.4.6.519\OpenCover.Console.exe -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\MSTest.exe" -targetargs:"/noresults /noisolation /testcontainer:"".\MyProject Unit Tests\bin\Debug\MyProject.UnitTests.dll" -filter:"+[MyProject]*  -[MyProject]MyProject.Properties.*" -excludebyattribute:*.ExcludeFromCodeCoverage* -hideskipped:All -output:.\MyProject_coverage.xml
     - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
     - pip install codecov
@@ -93,8 +93,8 @@ Users working with XUnit will need to modify their OpenCover call as follows:
   ```
   -targetargs:"C:\projects\stylecopanalyzers\StyleCop.Analyzers\StyleCop.Analyzers.Test\bin\Debug\StyleCop.Analyzers.Test.dll -noshadow -appveyor"
   ```
-  
-  
+
+
 ### Important notes
 - `BuildOptions` should not include `"portable"` option on the dotnetcore test project's `project.json` file.
 
